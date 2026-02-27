@@ -11,7 +11,7 @@ public class Medic : BaseUnityPlugin
 {
     private const string PluginGuid = "headclef.Medic";
     private const string PluginName = "Medic";
-    private const string PluginVersion = "1.0.0";
+    private const string PluginVersion = "1.0.1";
 
     internal static Medic Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger => Instance._logger;
@@ -23,6 +23,10 @@ public class Medic : BaseUnityPlugin
     internal static ConfigEntry<float> ReviveRange = null!;
     internal static ConfigEntry<float> ReviveCooldown = null!;
     internal static ConfigEntry<int> ReviveHealth = null!;
+
+    internal static ConfigEntry<bool> SelfReviveEnabled = null!;
+    internal static ConfigEntry<float> SelfReviveCooldown = null!;
+    internal static ConfigEntry<int> SelfReviveHealth = null!;
 
     private void Awake()
     {
@@ -62,6 +66,21 @@ public class Medic : BaseUnityPlugin
         ReviveHealth = Config.Bind(section, "Revive Health", 100,
             new ConfigDescription(
                 "Health the revived player starts with.",
+                new AcceptableValueRange<int>(1, 200)));
+
+        const string selfSection = "Self Revive";
+
+        SelfReviveEnabled = Config.Bind(selfSection, "Enabled", true,
+            "Allow self-reviving when you are dead by pressing the revive key.");
+
+        SelfReviveCooldown = Config.Bind(selfSection, "Self Revive Cooldown", 10f,
+            new ConfigDescription(
+                "Cooldown in seconds between self-revive attempts.",
+                new AcceptableValueRange<float>(0f, 120f)));
+
+        SelfReviveHealth = Config.Bind(selfSection, "Self Revive Health", 50,
+            new ConfigDescription(
+                "Health you start with after self-reviving.",
                 new AcceptableValueRange<int>(1, 200)));
     }
 }

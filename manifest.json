@@ -1,6 +1,6 @@
 {
     "name": "Medic",
-    "version_number": "1.0.0",
+    "version_number": "1.0.1",
     "website_url": "https://github.com/headclef/Repo-Medic",
     "description": "Revive dead players by pressing R when near them in R.E.P.O.",
     "dependencies": [
