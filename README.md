@@ -1,6 +1,6 @@
 # Medic
 
-A [BepInEx](https://github.com/BepInEx/BepInEx) mod for **R.E.P.O.** that lets you revive dead players by pressing a key when near them.
+A [BepInEx](https://github.com/BepInEx/BepInEx) mod for **R.E.P.O.** that lets you revive dead players — including yourself — by pressing a key.
 
 ## What This Mod Does
 
@@ -15,16 +15,30 @@ Walk up to a dead teammate and press **R** to revive them with full health. Work
 
 > There's a cooldown between revives to prevent spam (default: 5 seconds).
 
+### Self Revive
+
+Dead and spectating? Press the revive key (default **R**) to bring **yourself** back up, on a separate cooldown. Turn it off in the config if you'd rather revives always require a teammate.
+
 ## Configuration
 
-Settings are in `BepInEx/config/headclef.Medic.cfg` or in the **in-game mod config menu**:
+Settings are in `BepInEx/config/headclef.Medic.cfg` or in the **in-game mod config menu**.
+
+### [Revive]
 
 | Key | Default | Range | Description |
 |-----|---------|-------|-------------|
-| Revive Key | `R` | — | Key to press to revive |
+| Revive Key | `R` | — | Key to press to revive (also used for self-revive) |
 | Revive Range | `3` | 1–15 | Max distance to dead player (meters) |
 | Revive Cooldown | `5` | 0–60 | Seconds between revive attempts |
 | Revive Health | `100` | 1–200 | HP the revived player starts with |
+
+### [Self Revive]
+
+| Key | Default | Range | Description |
+|-----|---------|-------|-------------|
+| Enabled | `true` | — | Allow self-reviving while dead by pressing the revive key |
+| Self Revive Cooldown | `10` | 0–120 | Seconds between self-revive attempts |
+| Self Revive Health | `50` | 1–200 | HP you start with after self-reviving |
 
 ## Requirements
 
@@ -47,7 +61,7 @@ Settings are in `BepInEx/config/headclef.Medic.cfg` or in the **in-game mod conf
 ```
 ├── Medic.cs                        # Plugin entry point & config
 ├── Patches/
-│   └── RevivePatch.cs              # Harmony postfix — revive logic
+│   └── RevivePatch.cs              # Harmony patches — revive & self-revive logic
 └── README.md
 ```
 
