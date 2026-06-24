@@ -28,6 +28,8 @@ internal static class RevivePatch
             return true;
 
         // If the sender IS the master client, let the original run as normal
+        // Harmony003 is a false positive below: _info.Sender is only read, never modified.
+#pragma warning disable Harmony003
         if (_info.Sender == PhotonNetwork.MasterClient)
             return true;
 
@@ -35,6 +37,7 @@ internal static class RevivePatch
         try
         {
             Medic.Logger.LogDebug($"Bypassing MasterOnlyRPC for revive from {_info.Sender?.NickName ?? "unknown"}");
+#pragma warning restore Harmony003
 
             // Replicate the game's ReviveRPC body (minus the master check)
             if (!__instance.playerDeathHead)
