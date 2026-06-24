@@ -1,8 +1,8 @@
 {
     "name": "Medic",
-    "version_number": "1.0.1",
+    "version_number": "1.1.0",
     "website_url": "https://github.com/headclef/Repo-Medic",
-    "description": "Revive dead players by pressing R when near them in R.E.P.O.",
+    "description": "Revive dead teammates — or yourself — by pressing R in R.E.P.O.",
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100"
     ]
