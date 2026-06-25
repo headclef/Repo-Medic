@@ -14,6 +14,25 @@ internal static class RevivePatch
     private static float _lastSelfReviveTime;
 
     /// <summary>
+    /// True the frame the revive key goes down. We check the raw main key (plus any
+    /// configured modifiers) instead of <c>KeyboardShortcut.IsDown()</c>: IsDown() also
+    /// requires that NO other key is held, so holding WASD to move would suppress the
+    /// press — meaning revive wouldn't fire while you were moving.
+    /// </summary>
+    private static bool ReviveKeyPressed()
+    {
+        var key = Medic.ReviveKey.Value;
+        if (key.MainKey == KeyCode.None || !Input.GetKeyDown(key.MainKey))
+            return false;
+
+        foreach (var modifier in key.Modifiers)
+            if (!Input.GetKey(modifier))
+                return false;
+
+        return true;
+    }
+
+    /// <summary>
     /// Prefix on PlayerAvatar.ReviveRPC — bypasses the MasterOnlyRPC check
     /// so that any client (not just the host) can trigger a revive.
     /// Without this patch, non-host revive calls are silently rejected by
@@ -128,7 +147,7 @@ internal static class RevivePatch
             if (!Medic.SelfReviveEnabled.Value)
                 return;
 
-            if (!Medic.ReviveKey.Value.IsDown())
+            if (!ReviveKeyPressed())
                 return;
 
             var localAvatar = PlayerController.instance?.playerAvatarScript;
@@ -166,7 +185,7 @@ internal static class RevivePatch
                 return;
 
             // Check if revive key was pressed this frame
-            if (!Medic.ReviveKey.Value.IsDown())
+            if (!ReviveKeyPressed())
                 return;
 
             // Check cooldown
