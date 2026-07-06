@@ -11,7 +11,7 @@ public class Medic : BaseUnityPlugin
 {
     private const string PluginGuid = "headclef.Medic";
     private const string PluginName = "Medic";
-    private const string PluginVersion = "1.1.1";
+    private const string PluginVersion = "1.1.2";
 
     internal static Medic Instance { get; private set; } = null!;
     internal new static ManualLogSource Logger => Instance._logger;
